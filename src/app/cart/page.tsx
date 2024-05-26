@@ -1,3 +1,6 @@
+import DeleteCartItem from "./deleteCartItem";
+
+
 export const metadata = {
     title: "Shopping Cart",
   };
@@ -27,12 +30,14 @@ export const metadata = {
   }
   
   export default async function cart() {
-    const userId = "2?voucherCode=ad179e86-8694-41c3-be00-5faafaa8ba93"; // Mock userId, replace with actual userId as needed
+    const userId = "2"; // Mock userId, replace with actual userId as needed
     const cartData: ShoppingCartResponse = await getShoppingCart(userId);
     const cartItems: CartItem[] = Object.values(cartData.cartItems);
   
     return (
       <div className="py-10 px-10">
+        <h1 className="text-2xl font-bold">Shopping Cart</h1>
+        <br></br>
         {/* <div className="py-2">
           <AddProduct />
         </div> */}
@@ -55,12 +60,13 @@ export const metadata = {
                 <td>{item.price}</td>
                 <td>{item.quantity}</td>
                 <td>{(item.price * item.quantity).toFixed(2)}</td>
-                {/* <td className="flex">
-                  <div className="mr-1">
-                    <UpdateProduct {...item} />
-                  </div>
-                  <DeleteProduct {...item} />
-                </td> */}
+                <td>
+                  <DeleteCartItem
+                    userId={cartData.userId}
+                    productId={item.productId}
+                    title={item.name}
+                  />
+                </td>
               </tr>
             ))}
           </tbody>
