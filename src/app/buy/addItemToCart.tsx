@@ -25,7 +25,7 @@ export default function AddItemToCart({ productId, productTitle }: AddItemToCart
       productId: productId,
     };
 
-    await fetch(`http://localhost:8080/api/cart/addItem/${userId}`, {
+    await fetch(`https://toytopia-cart-production.up.railway.app//api/cart/addItem/${userId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -80,3 +80,4 @@ export default function AddItemToCart({ productId, productTitle }: AddItemToCart
     </div>
   );
 }
+
