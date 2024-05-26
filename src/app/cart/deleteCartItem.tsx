@@ -19,7 +19,7 @@ export default function DeleteCartItem({ userId, productId, title }: CartItemPro
     setIsMutating(true);
 
     await fetch(`http://localhost:8080/api/cart/delete/${userId}/${productId}`, {
-      method: "POST",
+      method: "DELETE",
     });
 
     setIsMutating(false);
@@ -48,7 +48,7 @@ export default function DeleteCartItem({ userId, productId, title }: CartItemPro
       <div className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg">
-            Are you sure you want to delete {title} {productId} {userId}?
+            Are you sure you want to delete {title}?
           </h3>
           <div className="modal-action">
             <button type="button" className="btn" onClick={handleChange}>

@@ -1,4 +1,5 @@
 import DeleteCartItem from "./deleteCartItem";
+import UpdateCartItem from "./updateCartItem";
 
 
 export const metadata = {
@@ -61,11 +62,11 @@ export const metadata = {
                 <td>{item.quantity}</td>
                 <td>{(item.price * item.quantity).toFixed(2)}</td>
                 <td>
-                  <DeleteCartItem
-                    userId={cartData.userId}
-                    productId={item.productId}
-                    title={item.name}
-                  />
+                    <div className="flex space-x-2">
+                        <UpdateCartItem userId={cartData.userId} productId={item.productId} 
+                        name = {item.name} quantity={item.quantity} />
+                        <DeleteCartItem userId={cartData.userId} productId={item.productId} title={item.name} />
+                    </div>
                 </td>
               </tr>
             ))}
