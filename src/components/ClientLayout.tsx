@@ -1,9 +1,13 @@
 "use client";
 
-import React from 'react';
+import React, { ReactNode } from 'react';
 import Navbar from './Navbar';
 
-const ClientLayout = ({ children }) => {
+interface ClientLayoutProps {
+  children: ReactNode;
+}
+
+const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
   return (
     <>
       <Navbar />

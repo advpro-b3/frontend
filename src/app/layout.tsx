@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import './globals.css';
 
 export const metadata = {
@@ -6,7 +6,11 @@ export const metadata = {
   description: 'A Next.js app',
 };
 
-const RootLayout = ({ children }) => {
+interface RootLayoutProps {
+  children: ReactNode;
+}
+
+const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   return (
     <html lang="en">
       <body>
@@ -17,3 +21,4 @@ const RootLayout = ({ children }) => {
 };
 
 export default RootLayout;
+
