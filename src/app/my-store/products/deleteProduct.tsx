@@ -3,22 +3,21 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-type CartItemProps = {
-  userId: number;
-  productId: string;
-  title: string;
+type ProductProps = {
+  id: string;
+  name: string;
 };
 
-export default function DeleteCartItem({ userId, productId, title }: CartItemProps) {
+export default function DeleteProduct({id, name}: ProductProps) {
   const [modal, setModal] = useState(false);
   const [isMutating, setIsMutating] = useState(false);
 
   const router = useRouter();
 
-  async function handleDelete(userId: number, productId: string) {
+  async function handleDelete(productId: string) {
     setIsMutating(true);
 
-    await fetch(`https://toytopia-cart-production.up.railway.app/api/cart/delete/${userId}/${productId}`, {
+    await fetch(`http://localhost:8081/api/product-service/delete-product/${productId}`, {
       method: "DELETE",
     });
 
@@ -48,7 +47,7 @@ export default function DeleteCartItem({ userId, productId, title }: CartItemPro
       <div className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg">
-            Are you sure you want to delete {title}?
+            Are you sure you want to delete {name}?
           </h3>
           <div className="modal-action">
             <button type="button" className="btn" onClick={handleChange}>
@@ -57,7 +56,7 @@ export default function DeleteCartItem({ userId, productId, title }: CartItemPro
             {!isMutating ? (
               <button
                 type="button"
-                onClick={() => handleDelete(userId, productId)}
+                onClick={() => handleDelete(id)}
                 className="btn btn-primary"
               >
                 Delete

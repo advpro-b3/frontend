@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 
 type CartItem = {
   id: number;
@@ -12,8 +12,10 @@ type CartItem = {
   cartItemId: number;
 };
 
-const Checkout = () => {
+const CheckoutContent = () => {
   const searchParams = useSearchParams();
+
+  // Retrieve values from search params
   const totalPrice = searchParams.get('totalPrice');
   const voucherCode = searchParams.get('voucherCode');
   const cartItemsString = searchParams.get('cartItems');
@@ -69,6 +71,14 @@ const Checkout = () => {
         </tfoot>
       </table>
     </div>
+  );
+};
+
+const Checkout = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CheckoutContent />
+    </Suspense>
   );
 };
 

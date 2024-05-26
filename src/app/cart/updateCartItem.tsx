@@ -27,7 +27,7 @@ export default function UpdateCartItem({ userId, productId, name, quantity }: Up
       quantity: newQuantity
     };
 
-    await fetch(`http://localhost:8080/api/cart/update/${userId}`, {
+    await fetch(`https://toytopia-cart-production.up.railway.app/api/cart/update/${userId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
