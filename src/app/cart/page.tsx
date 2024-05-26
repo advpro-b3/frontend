@@ -23,7 +23,7 @@ type ShoppingCartResponse = {
   voucherCode: string | null;
 };
 
-export async function getShoppingCart(userId: string, voucherCode?: string) {
+async function getShoppingCart(userId: string, voucherCode?: string) {
   let url = `http://localhost:8080/api/cart/data/${userId}`;
   if (voucherCode) {
     url += `?voucherCode=${voucherCode}`;
@@ -37,7 +37,7 @@ export async function getShoppingCart(userId: string, voucherCode?: string) {
   return res.json();
 }
 
-export default async function cart() {
+export default async function CartPage() {
   const userId = "2"; // Mock userId, replace with actual userId as needed
   const cartData: ShoppingCartResponse = await getShoppingCart(userId);
   const cartItems: CartItem[] = Object.values(cartData.cartItems);
