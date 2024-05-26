@@ -13,7 +13,7 @@ type UpdateProductProps = {
   availability: string;
 };
 
-export default function UpdateProduct({ id, name, description, price, stock, discount ,availability}: UpdateProductProps) {
+export default function UpdateProduct({ id, name, description, price, stock, discount, availability }: UpdateProductProps) {
   const [newName, setNewName] = useState(name);
   const [newDescription, setNewDescription] = useState(description);
   const [newPrice, setNewPrice] = useState(price);
@@ -31,7 +31,6 @@ export default function UpdateProduct({ id, name, description, price, stock, dis
     setIsUpdating(true);
 
     const requestBody = {
-      id: id,
       name: newName,
       description: newDescription,
       price: newPrice,
@@ -40,7 +39,9 @@ export default function UpdateProduct({ id, name, description, price, stock, dis
       availability: newAvailability
     };
 
-    await fetch(`http://localhost:8081/api/product-service/update-product/${id}`, {
+    console.log(JSON.stringify(requestBody));
+
+    await fetch(`http://localhost:8080/api/product-service/update-product/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -76,7 +77,7 @@ export default function UpdateProduct({ id, name, description, price, stock, dis
               <label className="label font-bold">Name</label>
               <input
                 type="string"
-                value={name}
+                value={newName}
                 onChange={(e) => setNewName(e.target.value)}
                 className="input w-full input-bordered"
                 placeholder="Name"
@@ -86,7 +87,7 @@ export default function UpdateProduct({ id, name, description, price, stock, dis
               <label className="label font-bold">Description</label>
               <input
                 type="string"
-                value={description}
+                value={newDescription}
                 onChange={(e) => setNewDescription(e.target.value)}
                 className="input w-full input-bordered"
                 placeholder="Description"
@@ -96,7 +97,7 @@ export default function UpdateProduct({ id, name, description, price, stock, dis
               <label className="label font-bold">Price</label>
               <input
                 type="number"
-                value={price}
+                value={newPrice}
                 onChange={(e) => setNewPrice(parseInt(e.target.value))}
                 className="input w-full input-bordered"
                 placeholder="Price"
@@ -106,7 +107,7 @@ export default function UpdateProduct({ id, name, description, price, stock, dis
               <label className="label font-bold">Discount</label>
               <input
                 type="number"
-                value={discount}
+                value={newDiscount}
                 onChange={(e) => setNewDiscount(parseInt(e.target.value))}
                 className="input w-full input-bordered"
                 placeholder="Discount"
@@ -116,7 +117,7 @@ export default function UpdateProduct({ id, name, description, price, stock, dis
               <label className="label font-bold">Stock</label>
               <input
                 type="number"
-                value={stock}
+                value={newStock}
                 onChange={(e) => setNewStock(parseInt(e.target.value))}
                 className="input w-full input-bordered"
                 placeholder="Stock"
@@ -124,13 +125,14 @@ export default function UpdateProduct({ id, name, description, price, stock, dis
             </div>
             <div className="form-control">
               <label className="label font-bold">Availability</label>
-              <input
-                type="string"
-                value={availability}
+              <select
+                value={newAvailability}
                 onChange={(e) => setNewAvailability(e.target.value)}
                 className="input w-full input-bordered"
-                placeholder="Availability"
-              />
+              >
+                <option value="READY">READY</option>
+                <option value="PREORDER">PREORDER</option>
+              </select>
             </div>
             <div className="modal-action">
               <button type="button" className="btn" onClick={() => setModal(false)}>
