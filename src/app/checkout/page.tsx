@@ -16,10 +16,18 @@ const CheckoutContent = () => {
   const searchParams = useSearchParams();
 
   // Retrieve values from search params
-  const totalPrice = searchParams.get('totalPrice');
-  const voucherCode = searchParams.get('voucherCode');
-  const cartItemsString = searchParams.get('cartItems');
+  const [totalPrice, setTotalPrice] = useState<string | null>(null);
+  const [voucherCode, setVoucherCode] = useState<string | null>(null);
+  const [cartItemsString, setCartItemsString] = useState<string | null>(null);
   const [items, setItems] = useState<CartItem[]>([]);
+
+  useEffect(() => {
+    if (searchParams) {
+      setTotalPrice(searchParams.get('totalPrice'));
+      setVoucherCode(searchParams.get('voucherCode'));
+      setCartItemsString(searchParams.get('cartItems'));
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     if (cartItemsString) {
