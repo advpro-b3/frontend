@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import ClientLayout from '../../components/ClientLayout';
 import styles from './vouchers.module.css';
 import withAuth from '../utils/withAuth';
 
@@ -69,7 +70,7 @@ const Vouchers: React.FC<VouchersProps> = ({ userRole }) => {
     try {
       const token = Cookies.get('token');
       const requestBody = {
-        discount: parseFloat(newVoucher.discount) / 100,
+        discount: parseFloat(newVoucher.discount) / 100, // Convert discount to 0.0 - 1.0
         maxDiscount: newVoucher.maxDiscount ? parseFloat(newVoucher.maxDiscount) : null,
         minPurchase: newVoucher.minPurchase ? parseFloat(newVoucher.minPurchase) : null,
         paymentMethod: newVoucher.paymentMethod || null,
@@ -119,7 +120,7 @@ const Vouchers: React.FC<VouchersProps> = ({ userRole }) => {
   const handleEdit = (voucher: Voucher) => {
     setCurrentVoucher(voucher);
     setNewVoucher({
-      discount: (voucher.discount * 100).toString(),
+      discount: (voucher.discount * 100).toString(), // Convert discount to 0-100
       maxDiscount: voucher.maxDiscount ? voucher.maxDiscount.toString() : '',
       minPurchase: voucher.minPurchase ? voucher.minPurchase.toString() : '',
       paymentMethod: voucher.paymentMethod,
@@ -158,106 +159,110 @@ const Vouchers: React.FC<VouchersProps> = ({ userRole }) => {
   }
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Existing Vouchers</h1>
-      {userRole === 'ADMIN' && (
-        <div className={styles.adminActions}>
-          <button className={styles.button} onClick={() => {
-            setShowForm(!showForm);
-            setEditMode(false);
-            setCurrentVoucher(null);
-          }}>
-            {showForm ? 'Cancel' : 'Create New Voucher'}
-          </button>
-        </div>
-      )}
-      {showForm && (
-        <form className={styles.form} onSubmit={handleSubmit}>
-          <input
-            type="number"
-            name="discount"
-            placeholder="Discount"
-            value={newVoucher.discount}
-            onChange={handleInputChange}
-            required
-            className={styles.input}
-          />
-          <input
-            type="number"
-            name="maxDiscount"
-            placeholder="Max Discount"
-            value={newVoucher.maxDiscount}
-            onChange={handleInputChange}
-            className={styles.input}
-          />
-          <input
-            type="number"
-            name="minPurchase"
-            placeholder="Min Purchase"
-            value={newVoucher.minPurchase}
-            onChange={handleInputChange}
-            className={styles.input}
-          />
-          <select
-            name="paymentMethod"
-            value={newVoucher.paymentMethod}
-            onChange={handleInputChange}
-            required
-            className={styles.input}
-          >
-            <option value="">Select Payment Method</option>
-            <option value="ANY">ANY</option>
-            <option value="BANK_TRANSFER">BANK_TRANSFER</option>
-            <option value="CREDIT_CARD">CREDIT_CARD</option>
-            <option value="DIGITAL_WALLET">DIGITAL_WALLET</option>
-          </select>
-          <input
-            type="date"
-            name="expiryDate"
-            placeholder="Expiry Date"
-            value={newVoucher.expiryDate}
-            onChange={handleInputChange}
-            className={styles.input}
-          />
-          <button type="submit" className={styles.button}>
-            {editMode ? 'Update Voucher' : 'Create Voucher'}
-          </button>
-        </form>
-      )}
-      <table className={styles.table}>
-        <thead>
-          <tr>
-            <th>Code</th>
-            <th>Discount</th>
-            <th>Max Discount</th>
-            <th>Min Purchase</th>
-            <th>Payment Method</th>
-            <th>Creation Date</th>
-            <th>Expiry Date</th>
-            {userRole === 'ADMIN' && <th>Actions</th>}
-          </tr>
-        </thead>
-        <tbody>
-          {vouchers.map((voucher) => (
-            <tr key={voucher.code}>
-              <td>{voucher.code}</td>
-              <td>{voucher.discount * 100}%</td>
-              <td>{voucher.maxDiscount ? `Rp ${voucher.maxDiscount}` : 'N/A'}</td>
-              <td>{voucher.minPurchase ? `Rp ${voucher.minPurchase}` : 'N/A'}</td>
-              <td>{voucher.paymentMethod}</td>
-              <td>{voucher.creationDate}</td>
-              <td>{voucher.expiryDate ? voucher.expiryDate : 'N/A'}</td>
-              {userRole === 'ADMIN' && (
-                <td>
-                  <button className={styles.button} onClick={() => handleEdit(voucher)}>Edit</button>
-                  <button className={styles.button} onClick={() => handleDelete(voucher.code)}>Delete</button>
-                </td>
-              )}
+    <ClientLayout>
+      <div className={styles.container}>
+        <h1 className={styles.title}>Existing Vouchers</h1>
+        {userRole === 'ADMIN' && (
+          <div className={styles.adminActions}>
+            <button className={styles.button} onClick={() => {
+              setShowForm(!showForm);
+              setEditMode(false);
+              setCurrentVoucher(null);
+            }}>
+              {showForm ? 'Cancel' : 'Create New Voucher'}
+            </button>
+          </div>
+        )}
+        {showForm && (
+          <form className={styles.form} onSubmit={handleSubmit}>
+            <input
+              type="number"
+              name="discount"
+              placeholder="Discount"
+              min="0"
+              max="100"
+              value={newVoucher.discount}
+              onChange={handleInputChange}
+              required
+              className={styles.input}
+            />
+            <input
+              type="number"
+              name="maxDiscount"
+              placeholder="Max Discount"
+              value={newVoucher.maxDiscount}
+              onChange={handleInputChange}
+              className={styles.input}
+            />
+            <input
+              type="number"
+              name="minPurchase"
+              placeholder="Min Purchase"
+              value={newVoucher.minPurchase}
+              onChange={handleInputChange}
+              className={styles.input}
+            />
+            <select
+              name="paymentMethod"
+              value={newVoucher.paymentMethod}
+              onChange={handleInputChange}
+              required
+              className={styles.input}
+            >
+              <option value="">Select Payment Method</option>
+              <option value="ANY">ANY</option>
+              <option value="BANK_TRANSFER">BANK_TRANSFER</option>
+              <option value="CREDIT_CARD">CREDIT_CARD</option>
+              <option value="DIGITAL_WALLET">DIGITAL_WALLET</option>
+            </select>
+            <input
+              type="date"
+              name="expiryDate"
+              placeholder="Expiry Date"
+              value={newVoucher.expiryDate}
+              onChange={handleInputChange}
+              className={styles.input}
+            />
+            <button type="submit" className={styles.button}>
+              {editMode ? 'Update Voucher' : 'Create Voucher'}
+            </button>
+          </form>
+        )}
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Discount</th>
+              <th>Max Discount</th>
+              <th>Min Purchase</th>
+              <th>Payment Method</th>
+              <th>Creation Date</th>
+              <th>Expiry Date</th>
+              {userRole === 'ADMIN' && <th>Actions</th>}
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {vouchers.map((voucher) => (
+              <tr key={voucher.code}>
+                <td>{voucher.code}</td>
+                <td>{voucher.discount * 100}%</td>
+                <td>{voucher.maxDiscount ? `Rp ${voucher.maxDiscount}` : 'N/A'}</td>
+                <td>{voucher.minPurchase ? `Rp ${voucher.minPurchase}` : 'N/A'}</td>
+                <td>{voucher.paymentMethod}</td>
+                <td>{voucher.creationDate}</td>
+                <td>{voucher.expiryDate ? voucher.expiryDate : 'N/A'}</td>
+                {userRole === 'ADMIN' && (
+                  <td>
+                    <button className={styles.button} onClick={() => handleEdit(voucher)}>Edit</button>
+                    <button className={styles.button} onClick={() => handleDelete(voucher.code)}>Delete</button>
+                  </td>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </ClientLayout>
   );
 };
 

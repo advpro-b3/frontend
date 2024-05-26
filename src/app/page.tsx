@@ -1,9 +1,14 @@
+import React from 'react';
+import ClientLayout from '../components/ClientLayout';
 
-
-export default function Home() {
+const Home: React.FC = () => {
   return (
-    <div>
-      <h1>Home</h1>
-    </div>
+    <ClientLayout>
+      <div>
+        <h1>Welcome to the Home Page</h1>
+      </div>
+    </ClientLayout>
   );
-}
+};
+
+export default Home;
