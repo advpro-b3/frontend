@@ -15,7 +15,7 @@ type Product = {
   availability: string;
 };
 
-export async function getAllProducts(userId: string, voucherCode?: string) {
+async function getAllProducts(userId: string, voucherCode?: string) {
   let url = `http://localhost:8081/api/product-service/all-products`;
   const res = await fetch(url, {
     cache: "no-store",
