@@ -1,43 +1,14 @@
+import React from 'react';
 import DeleteCartItem from "./deleteCartItem";
 import UpdateCartItem from "./updateCartItem";
 import ApplyVoucher from "./applyVoucher";
+import { getShoppingCart, CartItem, ShoppingCartResponse } from './utils';
 
 export const metadata = {
   title: "Shopping Cart",
 };
 
-type CartItem = {
-  id: number;
-  productId: string;
-  name: string;
-  quantity: number;
-  price: number;
-  cartItemId: number;
-};
-
-type ShoppingCartResponse = {
-  totalPrice: number;
-  message: string;
-  cartItems: { [key: string]: CartItem };
-  userId: number;
-  voucherCode: string | null;
-};
-
-export async function getShoppingCart(userId: string, voucherCode?: string) {
-  let url = `http://localhost:8080/api/cart/data/${userId}`;
-  if (voucherCode) {
-    url += `?voucherCode=${voucherCode}`;
-  }
-  const res = await fetch(url, {
-    cache: "no-store",
-  });
-  if (!res.ok) {
-    throw new Error('Failed to fetch cart data');
-  }
-  return res.json();
-}
-
-export default async function cart() {
+export default async function CartPage() {
   const userId = "2"; // Mock userId, replace with actual userId as needed
   const cartData: ShoppingCartResponse = await getShoppingCart(userId);
   const cartItems: CartItem[] = Object.values(cartData.cartItems);
