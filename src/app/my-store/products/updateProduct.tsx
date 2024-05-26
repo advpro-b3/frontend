@@ -41,7 +41,7 @@ export default function UpdateProduct({ id, name, description, price, stock, dis
 
     console.log(JSON.stringify(requestBody));
 
-    await fetch(`http://localhost:8080/api/product-service/update-product/${id}`, {
+    await fetch(`http://35.232.64.117/api/product-service/update-product/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
