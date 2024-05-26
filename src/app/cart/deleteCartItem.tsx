@@ -18,7 +18,7 @@ export default function DeleteCartItem({ userId, productId, title }: CartItemPro
   async function handleDelete(userId: number, productId: string) {
     setIsMutating(true);
 
-    await fetch(`http://localhost:8080/api/cart/delete/${userId}/${productId}`, {
+    await fetch(`https://toytopia-cart-production.up.railway.app/api/cart/delete/${userId}/${productId}`, {
       method: "DELETE",
     });
 

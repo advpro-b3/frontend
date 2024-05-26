@@ -17,7 +17,7 @@ export default function ApplyVoucher({ userId }: ApplyVoucherProps) {
     setIsApplying(true);
     setMessage("");
 
-    const res = await fetch(`http://localhost:8080/api/cart/data/${userId}?voucherCode=${voucherCode}`, {
+    const res = await fetch(`https://toytopia-cart-production.up.railway.app/api/cart/data/${userId}?voucherCode=${voucherCode}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
