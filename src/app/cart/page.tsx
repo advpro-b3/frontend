@@ -24,7 +24,7 @@ type ShoppingCartResponse = {
 };
 
 async function getShoppingCart(userId: string, voucherCode?: string) {
-  let url = `http://localhost:8080/api/cart/data/${userId}`;
+  let url = `https://toytopia-cart-production.up.railway.app/api/cart/data/${userId}`;
   if (voucherCode) {
     url += `?voucherCode=${voucherCode}`;
   }
