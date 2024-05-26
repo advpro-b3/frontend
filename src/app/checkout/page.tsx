@@ -13,7 +13,10 @@ type CartItem = {
 };
 
 const Checkout = () => {
+  // Wrap the hook usage in a suspense boundary
   const searchParams = useSearchParams();
+
+  // Retrieve values from search params
   const totalPrice = searchParams.get('totalPrice');
   const voucherCode = searchParams.get('voucherCode');
   const cartItemsString = searchParams.get('cartItems');

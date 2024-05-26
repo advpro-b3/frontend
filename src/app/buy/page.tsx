@@ -1,6 +1,4 @@
-// import AddProduct from "./addProduct";
-// import DeleteProduct from "./deleteProduct";
-// import UpdateProduct from "./updateProduct";
+import AddItemToCart from "./addItemToCart";
 
 export const metadata = {
   title: "Product List",
@@ -33,9 +31,6 @@ export default async function ProductList() {
     <div className="py-10 px-10">
       <h1 className="text-2xl font-bold">Katalog Produk</h1>
       <br />
-      {/* <div className="py-2">
-        <AddProduct />
-      </div> */}
       <table className="table w-full">
         <thead>
           <tr>
@@ -59,12 +54,11 @@ export default async function ProductList() {
               <td>{product.stock}</td>
               <td>{product.discount}</td>
               <td>{product.availability}</td>
-              {/* <td className="flex">
-                <div className="mr-1">
-                  <UpdateProduct {...product} />
+              <td className="flex">
+                <div className="flex space-x-2">
+                  <AddItemToCart productId={product.id} productTitle={product.name} />
                 </div>
-                <DeleteProduct {...product} />
-              </td> */}
+              </td>
             </tr>
           ))}
         </tbody>
