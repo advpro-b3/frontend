@@ -80,3 +80,4 @@ export default function AddItemToCart({ productId, productTitle }: AddItemToCart
     </div>
   );
 }
+
