@@ -15,7 +15,7 @@ type Product = {
   availability: string;
 };
 
-export async function getAllProducts(userId: string, voucherCode?: string) {
+export async function products(userId: string, voucherCode?: string) {
   let url = `http://localhost:8081/api/product-service/all-products`;
   const res = await fetch(url, {
     cache: "no-store",
@@ -28,7 +28,7 @@ export async function getAllProducts(userId: string, voucherCode?: string) {
 
 export default async function myProducts() {
   const userId = "2"; // Mock userId, replace with actual userId as needed
-  const products: Product[] = await getAllProducts(userId);
+  const allProducts: Product[] = await products(userId);
   return (
     <div className="py-10 px-10">
       <h1 className="text-2xl font-bold">My Products</h1>
@@ -47,7 +47,7 @@ export default async function myProducts() {
           </tr>
         </thead>
         <tbody>
-          {products.map((item, index) => (
+          {allProducts.map((item, index) => (
             <tr key={item.id}>
               <td>{index + 1}</td>
               <td>{item.name}</td>
