@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 
 type CartItem = {
   id: number;
@@ -12,8 +12,7 @@ type CartItem = {
   cartItemId: number;
 };
 
-const Checkout = () => {
-  // Wrap the hook usage in a suspense boundary
+const CheckoutContent = () => {
   const searchParams = useSearchParams();
 
   // Retrieve values from search params
@@ -72,6 +71,14 @@ const Checkout = () => {
         </tfoot>
       </table>
     </div>
+  );
+};
+
+const Checkout = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CheckoutContent />
+    </Suspense>
   );
 };
 
