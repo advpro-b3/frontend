@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
@@ -8,9 +8,16 @@ import styles from './Navbar.module.css';
 
 const Navbar: React.FC = () => {
   const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const token = Cookies.get('token');
+    setIsAuthenticated(!!token);
+  }, []);
 
   const handleLogout = () => {
     Cookies.remove('token');
+    setIsAuthenticated(false);
     router.push('/login');
   };
 
@@ -24,7 +31,11 @@ const Navbar: React.FC = () => {
           <Link href="/vouchers" className={styles.navLink}>Vouchers</Link>
         </li>
         <li className={styles.navItem}>
-          <button onClick={handleLogout} className={styles.navButton}>Logout</button>
+          {isAuthenticated ? (
+            <button onClick={handleLogout} className={styles.navButton}>Logout</button>
+          ) : (
+            <Link href="/login" className={styles.navLink}>Login</Link>
+          )}
         </li>
       </ul>
     </nav>
