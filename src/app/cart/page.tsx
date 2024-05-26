@@ -1,3 +1,4 @@
+import React from 'react';
 import DeleteCartItem from "./deleteCartItem";
 import UpdateCartItem from "./updateCartItem";
 import ApplyVoucher from "./applyVoucher";
