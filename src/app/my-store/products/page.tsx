@@ -16,7 +16,7 @@ type Product = {
 };
 
 async function getAllProducts(userId: string, voucherCode?: string) {
-  let url = `http://localhost:8081/api/product-service/all-products`;
+  let url = `http://35.232.64.117/api/product-service/all-products`;
   const res = await fetch(url, {
     cache: "no-store",
   });

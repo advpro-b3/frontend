@@ -17,7 +17,7 @@ export default function DeleteProduct({id, name}: ProductProps) {
   async function handleDelete(productId: string) {
     setIsMutating(true);
 
-    await fetch(`http://localhost:8081/api/product-service/delete-product/${productId}`, {
+    await fetch(`http://35.232.64.117/api/product-service/delete-product/${productId}`, {
       method: "DELETE",
     });
 
